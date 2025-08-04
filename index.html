@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skyline Builders - Premium Construction & Development</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .hero-3d {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: gridMove 30s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(20px, 20px); }
+        }
+        
+        .project-card {
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            box-shadow: 20px 20px 60px #d1d5db, -20px -20px 60px #ffffff;
+        }
+        
+        .project-card:hover {
+            transform: rotateY(-8deg) rotateX(4deg) translateZ(30px);
+            box-shadow: 30px 30px 80px #d1d5db, -30px -30px 80px #ffffff;
+        }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        
+        .building-animation {
+            transform-style: preserve-3d;
+            animation: buildingRotate 40s linear infinite;
+        }
+        
+        @keyframes buildingRotate {
+            0% { transform: rotateY(0deg) rotateX(5deg); }
+            100% { transform: rotateY(360deg) rotateX(5deg); }
+        }
+        
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .timeline-item {
+            transform: perspective(1000px) rotateX(5deg);
+            transition: all 0.5s ease;
+        }
+        
+        .timeline-item:hover {
+            transform: perspective(1000px) rotateX(0deg) translateY(-10px);
+        }
+        
+        .contact-card {
+            background: linear-gradient(145deg, #f8fafc, #e2e8f0);
+            box-shadow: inset 20px 20px 60px #d1d5db, inset -20px -20px 60px #ffffff;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px) rotateX(2deg);
+        }
+        
+        .nav-glass {
+            background: rgba(30, 58, 138, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .section-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+            height: 4px;
+            border-radius: 2px;
+            transform-origin: left;
+            animation: progressGrow 2s ease-out;
+        }
+        
+        @keyframes progressGrow {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold text-white">Sourabh Nejkar</div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition-colors nav-link">Home</a>
+                        <a href="#projects" class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition-colors nav-link">Projects</a>
+                        <a href="#about" class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition-colors nav-link">About Us</a>
+                        <a href="#contact" class="text-white hover:text-blue-200 px-3 py-2 text-sm font-medium transition-colors nav-link">Contact</a>
+                    </div>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-16 right-0 w-64 h-full bg-blue-900 md:hidden">
+            <div class="px-4 py-6 space-y-4">
+                <a href="#home" class="block text-white hover:text-blue-200 py-2 nav-link">Home</a>
+                <a href="#projects" class="block text-white hover:text-blue-200 py-2 nav-link">Projects</a>
+                <a href="#about" class="block text-white hover:text-blue-200 py-2 nav-link">About Us</a>
+                <a href="#contact" class="block text-white hover:text-blue-200 py-2 nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-3d min-h-screen flex items-center justify-center relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="floating-element">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                    Building Dreams
+                    <span class="block bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent">
+                        Creating Futures
+                    </span>
+                </h1>
+            </div>
+            <p class="text-lg md:text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+                With over 25 years of excellence in construction and development, we transform visions into architectural masterpieces that stand the test of time.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <button class="glass-morphism text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-all transform hover:scale-105">
+                    Explore Projects
+                </button>
+                <button class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-all transform hover:scale-105">
+                    Get Quote
+                </button>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-4xl mx-auto">
+                <div class="glass-morphism rounded-2xl p-4 md:p-6">
+                    <div class="text-2xl md:text-3xl font-bold text-white mb-1">150+</div>
+                    <div class="text-blue-200 text-sm md:text-base">Projects Completed</div>
+                </div>
+                <div class="glass-morphism rounded-2xl p-4 md:p-6">
+                    <div class="text-2xl md:text-3xl font-bold text-white mb-1">25+</div>
+                    <div class="text-blue-200 text-sm md:text-base">Years Experience</div>
+                </div>
+                <div class="glass-morphism rounded-2xl p-4 md:p-6">
+                    <div class="text-2xl md:text-3xl font-bold text-white mb-1">50+</div>
+                    <div class="text-blue-200 text-sm md:text-base">Expert Team</div>
+                </div>
+                <div class="glass-morphism rounded-2xl p-4 md:p-6">
+                    <div class="text-2xl md:text-3xl font-bold text-white mb-1">100%</div>
+                    <div class="text-blue-200 text-sm md:text-base">Client Satisfaction</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 3D Building Animation -->
+        <div class="absolute right-4 lg:right-10 top-1/2 transform -translate-y-1/2 hidden sm:block">
+            <div class="building-animation">
+                <svg width="150" height="200" viewBox="0 0 150 200" class="opacity-20">
+                    <defs>
+                        <linearGradient id="buildingGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.4" />
+                            <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.1" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="30" y="80" width="90" height="120" fill="url(#buildingGrad1)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+                    <rect x="40" y="95" width="12" height="12" fill="rgba(255,255,255,0.6)"/>
+                    <rect x="55" y="95" width="12" height="12" fill="rgba(255,255,255,0.3)"/>
+                    <rect x="70" y="95" width="12" height="12" fill="rgba(255,255,255,0.6)"/>
+                    <rect x="85" y="95" width="12" height="12" fill="rgba(255,255,255,0.3)"/>
+                    <rect x="100" y="95" width="12" height="12" fill="rgba(255,255,255,0.6)"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 md:py-20 bg-white section-reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Our Signature Projects</h2>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Portfolio Info</p>
+            </div>
+            
+            <!-- Project Categories -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="project-filter active bg-blue-600 text-white px-6 py-3 rounded-full font-semibold transition-all" data-filter="all">All Projects</button>
+                <button class="project-filter bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all" data-filter="completed">Completed</button>
+                <button class="project-filter bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all" data-filter="ongoing">Ongoing</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <!-- Completed Project 1 -->
+                <div class="project-card project-item completed rounded-3xl overflow-hidden" data-category="completed">
+                    <div class="h-48 md:h-64 bg-gradient-to-br from-emerald-400 to-emerald-600 relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg width="120" height="100" viewBox="0 0 120 100" class="text-white opacity-60">
+                                <rect x="10" y="40" width="100" height="50" fill="currentColor" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                                <polygon points="10,40 60,15 110,40" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="25" y="55" width="15" height="15" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="45" y="55" width="15" height="15" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="65" y="55" width="15" height="15" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="85" y="55" width="15" height="15" fill="rgba(255,255,255,0.5)"/>
+                            </svg>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            ✅ Completed
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <div class="progress-bar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">1</h3>
+                        <p class="text-gray-600 mb-4">Details</p>
+                        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+                            <div>
+                                <span class="font-semibold text-gray-700">Location:</span>
+                                <p class="text-gray-600">Mumbai</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Completed:</span>
+                                <p class="text-gray-600">March 2024</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Units:</span>
+                                <p class="text-gray-600">200 Apartments</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Area:</span>
+                                <p class="text-gray-600">2 acres</p>
+                            </div>
+                        </div>
+                        <button class="w-full bg-emerald-600 text-white py-3 rounded-xl font-semibold hover:bg-emerald-700 transition-colors">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ongoing Project 1 -->
+                <div class="project-card project-item ongoing rounded-3xl overflow-hidden" data-category="ongoing">
+                    <div class="h-48 md:h-64 bg-gradient-to-br from-orange-400 to-orange-600 relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg width="120" height="100" viewBox="0 0 120 100" class="text-white opacity-60">
+                                <rect x="5" y="30" width="110" height="60" fill="currentColor" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                                <rect x="20" y="45" width="12" height="12" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="35" y="45" width="12" height="12" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="50" y="45" width="12" height="12" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="65" y="45" width="12" height="12" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="80" y="45" width="12" height="12" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="95" y="45" width="12" height="12" fill="rgba(255,255,255,0.5)"/>
+                            </svg>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+            
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <div class="progress-bar" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">2</h3>
+                        <p class="text-gray-600 mb-4">Details</p>
+                        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+                            <div>
+                                <span class="font-semibold text-gray-700">Location:</span>
+                                <p class="text-gray-600">2</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Expected:</span>
+                                <p class="text-gray-600">2</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Floors:</span>
+                                <p class="text-gray-600">2</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Area:</span>
+                                <p class="text-gray-600">2</p>
+                            </div>
+                        </div>
+                        <button class="w-full bg-orange-600 text-white py-3 rounded-xl font-semibold hover:bg-orange-700 transition-colors">
+                            View Progress
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Completed Project 2 -->
+                <div class="project-card project-item completed rounded-3xl overflow-hidden" data-category="completed">
+                    <div class="h-48 md:h-64 bg-gradient-to-br from-purple-400 to-purple-600 relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg width="120" height="100" viewBox="0 0 120 100" class="text-white opacity-60">
+                                <rect x="20" y="35" width="80" height="55" fill="currentColor" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                                <polygon points="20,35 60,10 100,35" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="35" y="50" width="10" height="10" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="50" y="50" width="10" height="10" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="65" y="50" width="10" height="10" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="80" y="50" width="10" height="10" fill="rgba(255,255,255,0.5)"/>
+                            </svg>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            ✅ Completed
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <div class="progress-bar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">3</h3>
+                        <p class="text-gray-600 mb-4">Details</p>
+                        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+                            <div>
+                                <span class="font-semibold text-gray-700">Location:</span>
+                                <p class="text-gray-600">3</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Completed:</span>
+                                <p class="text-gray-600">3</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Feature:</span>
+                                <p class="text-gray-600">3</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Area:</span>
+                                <p class="text-gray-600">3</p>
+                            </div>
+                        </div>
+                        <button class="w-full bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition-colors">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ongoing Project 2 -->
+                <div class="project-card project-item ongoing rounded-3xl overflow-hidden" data-category="ongoing">
+                    <div class="h-48 md:h-64 bg-gradient-to-br from-blue-400 to-blue-600 relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg width="120" height="100" viewBox="0 0 120 100" class="text-white opacity-60">
+                                <rect x="15" y="25" width="90" height="65" fill="currentColor" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                                <rect x="30" y="40" width="8" height="8" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="42" y="40" width="8" height="8" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="54" y="40" width="8" height="8" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="66" y="40" width="8" height="8" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="78" y="40" width="8" height="8" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="90" y="40" width="8" height="8" fill="rgba(255,255,255,0.5)"/>
+                            </svg>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <div class="progress-bar" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">4</h3>
+                        <p class="text-gray-600 mb-4">Details</p>
+                        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+                            <div>
+                                <span class="font-semibold text-gray-700">Location:</span>
+                                <p class="text-gray-600">4</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Expected:</span>
+                                <p class="text-gray-600">Date</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Capacity:</span>
+                                <p class="text-gray-600"></p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Area:</span>
+                                <p class="text-gray-600">area here</p>
+                            </div>
+                        </div>
+                        <button class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors">
+                            View Progress
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Completed Project 3 -->
+                <div class="project-card project-item completed rounded-3xl overflow-hidden" data-category="completed">
+                    <div class="h-48 md:h-64 bg-gradient-to-br from-teal-400 to-teal-600 relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg width="120" height="100" viewBox="0 0 120 100" class="text-white opacity-60">
+                                <rect x="25" y="30" width="70" height="60" fill="currentColor" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                                <polygon points="25,30 60,5 95,30" fill="rgba(255,255,255,0.3)"/>
+                                <rect x="40" y="45" width="12" height="12" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="55" y="45" width="12" height="12" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="70" y="45" width="12" height="12" fill="rgba(255,255,255,0.5)"/>
+                            </svg>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            ✅ Completed
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <div class="progress-bar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">5</h3>
+                        <p class="text-gray-600 mb-4">Deails</p>
+                        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+                            <div>
+                                <span class="font-semibold text-gray-700">Location:</span>
+                                <p class="text-gray-600">5</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Completed:</span>
+                                <p class="text-gray-600">Date</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Feature:</span>
+                                <p class="text-gray-600">Feature</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Area:</span>
+                                <p class="text-gray-600">area here</p>
+                            </div>
+                        </div>
+                        <button class="w-full bg-teal-600 text-white py-3 rounded-xl font-semibold hover:bg-teal-700 transition-colors">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ongoing Project 3 -->
+                <div class="project-card project-item ongoing rounded-3xl overflow-hidden" data-category="ongoing">
+                    <div class="h-48 md:h-64 bg-gradient-to-br from-indigo-400 to-indigo-600 relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg width="120" height="100" viewBox="0 0 120 100" class="text-white opacity-60">
+                                <rect x="10" y="20" width="100" height="70" fill="currentColor" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                                <rect x="25" y="35" width="10" height="10" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="40" y="35" width="10" height="10" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="55" y="35" width="10" height="10" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="70" y="35" width="10" height="10" fill="rgba(255,255,255,0.5)"/>
+                                <rect x="85" y="35" width="10" height="10" fill="rgba(255,255,255,0.5)"/>
+                            </svg>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            🚧 60% Complete
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <div class="progress-bar" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">6</h3>
+                        <p class="text-gray-600 mb-4">Details</p>
+                        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+                            <div>
+                                <span class="font-semibold text-gray-700">Location:</span>
+                                <p class="text-gray-600">Location here</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Expected:</span>
+                                <p class="text-gray-600">Date</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Detail</span>
+                                <p class="text-gray-600">Capacitiy</p>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-700">Area:</span>
+                                <p class="text-gray-600">area here</p>
+                            </div>
+                        </div>
+                        <button class="w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors">
+                            View Progress
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Sourabh Nejkar</h3>
+                    <p class="text-gray-400 mb-4">Building dreams, creating futures. Your trusted partner in construction and development.</p>
+                    <div class="flex space-x-4">
+                        <button class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">📘</button>
+                        <button class="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors">🐦</button>
+                        <button class="w-10 h-10 bg-blue-700 rounded-full flex items-center justify-center hover:bg-blue-800 transition-colors">💼</button>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#home" class="hover:text-white transition-colors nav-link">Home</a></li>
+                        <li><a href="#projects" class="hover:text-white transition-colors nav-link">Projects</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors nav-link">About Us</a></li>
+                        <li><a href="#contact" class="hover:text-white transition-colors nav-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Residential Construction</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Commercial Development</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Project Management</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Consultation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p>📧 info@skylinebuilders.com</p>
+                        <p>📞 +1 (555) 123-4567</p>
+                        <p>📍 123 Construction Avenue<br>Downtown District, NY 10001</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Skyline Builders. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                    mobileMenu.classList.remove('open'); // Close mobile menu
+                }
+            });
+        });
+
+        // Project filtering
+        const filterButtons = document.querySelectorAll('.project-filter');
+        const projectItems = document.querySelectorAll('.project-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-blue-600', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                });
+                button.classList.add('active', 'bg-blue-600', 'text-white');
+                button.classList.remove('bg-gray-200', 'text-gray-700');
+
+                // Filter projects
+                const filter = button.getAttribute('data-filter');
+                projectItems.forEach(item => {
+                    if (filter === 'all' || item.classList.contains(filter)) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 100);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-reveal').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-3d');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! This is a demo form. In a real website, this would send your message to our team.');
+        });
+
+        // Button click handlers
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const buttonText = this.textContent.trim();
+                
+                if (buttonText.includes('View Details') || buttonText.includes('View Progress')) {
+                    e.preventDefault();
+                    alert('Project details would open in a detailed view. This is a demo version.');
+                } else if (buttonText.includes('Explore Projects')) {
+                    e.preventDefault();
+                    document.querySelector('#projects').scrollIntoView({ behavior: 'smooth' });
+                } else if (buttonText.includes('Get Quote')) {
+                    e.preventDefault();
+                    document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'969fbbdb84d8dfa6',t:'MTc1NDMyODExNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
